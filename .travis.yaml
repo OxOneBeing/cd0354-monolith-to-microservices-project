@@ -1,0 +1,27 @@
+language: node_js
+node_js:
+  - 16
+
+
+services:
+  - docker
+
+
+before_script: []
+script:
+  - docker --version # Logs the docker version
+  - docker build -t udagram-api-feed ./udagram-api-feed
+  - docker tag udagram-api-feed oxonebeing/udagram-api-feed:v1
+  - docker build -t udagram-api-user ./udagram-api-user
+  - docker tag udagram-api-user oxonebeing/udagram-api-user:v1
+  - docker build -t udagram-api-frontend ./udagram-api-frontend
+  - docker tag udagram-api-frontend oxonebeing/udagram-api-frontend:c1
+  - docker build -t udagram-reverseproxy ./reverseproxy
+  - docker tag udagram-reverseproxy oxonebeing/reverseproxy:v1
+
+after_success:
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+  - docker push oxonebeing/udagram-api-feed:v1
+  - docker push oxonebeing/udagram-api-user:v1
+  - docker push oxonebeing/udagram-api-frontend:v1
+  - docker push oxonebeing/reverseproxy:v1
