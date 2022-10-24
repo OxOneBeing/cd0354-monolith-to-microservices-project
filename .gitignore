@@ -47,3 +47,4 @@ admin-iam_-_credentials.csv
 aws_-_admin_user_credentials.csv
 ENVIRONMENT_VARIABLE.txt
 eks-cluster-role-trust-policy.json
+terminal-access-token.sh
